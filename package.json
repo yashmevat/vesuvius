@@ -2,10 +2,11 @@
   "name": "vesuviusdemo",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev":"nodemon server.js",
     "build": "next build",
-    "start": "next start",
+    "start":"NODE_ENV=production node server.js",
     "lint": "next lint",
     "superadminSeeder": "node scripts/superadminSeeder.js"
   },
@@ -16,6 +17,7 @@
     "cohere-ai": "^7.18.0",
     "cookie": "^1.0.2",
     "dotenv": "^17.2.1",
+    "express": "^5.1.0",
     "jose": "^6.0.12",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
@@ -25,6 +27,7 @@
     "next": "^15.4.6",
     "next-connect": "^1.0.0",
     "node-cron": "^4.2.1",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^7.0.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -37,6 +40,7 @@
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
+    "nodemon": "^3.1.10",
     "tailwindcss": "^4"
   }
 }

@@ -11,7 +11,7 @@ export async function POST(req) {
 
     const [rows] = await db.query(
       `
-      SELECT id, message, created_at
+      SELECT id, client_id, message, created_at
       FROM notifications
       WHERE receiver_id = ?
         AND YEARWEEK(created_at, 1) = YEARWEEK(NOW(), 1)  -- current week

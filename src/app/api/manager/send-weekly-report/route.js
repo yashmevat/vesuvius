@@ -20,17 +20,17 @@ export async function POST(req) {
         [managerId, selectedClient, pdfUrl]
       );
 
-      // ✅ Remove any old notifications for this manager related to weekly report
+      // ✅ Remove only the notification for this specific client
       await connection.execute(
-        `DELETE FROM notifications WHERE receiver_id = ? AND sent_via = 'dashboard'`,
-        [managerId]
+        `DELETE FROM notifications WHERE receiver_id = ? AND client_id = ? AND sent_via = 'dashboard'`,
+        [managerId, selectedClient]
       );
 
       await connection.commit();
 
       return NextResponse.json({
         success: true,
-        message: "✅ Weekly report saved and notifications cleared"
+        message: "✅ Weekly report saved and related notification cleared"
       });
     } catch (err) {
       await connection.rollback();
