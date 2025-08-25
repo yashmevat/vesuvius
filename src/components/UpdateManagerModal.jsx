@@ -10,7 +10,7 @@ export default function UpdateManagerModal({ isOpen, onClose, manager }) {
 
   const handleSubmit = async () => {
     try {
-      const res = await fetch("/api/superadmin/managers/update", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/managers/update`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: manager.id, name, email, workforceLimit: Number(workforceLimit) }),

@@ -54,7 +54,7 @@ export default function WorkforceReportForm() {
             try {
 
                 if (selectedManager) {
-                    const manClientsRes = await fetch("/api/manager/getclients/", {
+                    const manClientsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/manager/getclients/`, {
                         method: "POST",
                         body: JSON.stringify({ id: selectedManager })
                     });
@@ -83,15 +83,15 @@ export default function WorkforceReportForm() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const resManagers = await fetch("/api/superadmin/managers/list");
+                const resManagers = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/managers/list`);
                 const managersData = await resManagers.json();
                 setManagers(managersData);
 
-                const resClients = await fetch("/api/superadmin/clients/list");
+                const resClients = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/clients/list`);
                 const clientsData = await resClients.json();
                 setClients(clientsData);
 
-                const idRes = await fetch("/api/auth/getuserid");
+                const idRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/getuserid`);
                 const idData = await idRes.json();
                 setUserId(idData);
                 console.log(userId)
@@ -112,7 +112,7 @@ export default function WorkforceReportForm() {
         if (!shortText) return alert("Please enter short text first.");
         setElaborateLoading(true);
         try {
-            const res = await fetch("/api/elaborate", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/elaborate`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ shortText }),
@@ -148,7 +148,7 @@ export default function WorkforceReportForm() {
         const imageUrl = cloudinaryData.secure_url;
 
         // Save report in DB
-        const res = await fetch("/api/superadmin/workforce/report-submit", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/workforce/report-submit`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

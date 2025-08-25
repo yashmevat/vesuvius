@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 export default function DeleteManagerModal({ isOpen, onClose, manager }) {
   const handleDelete = async () => {
     try {
-      const res = await fetch(`/api/superadmin/managers/delete/${manager.id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/managers/delete/${manager.id}`, {
         method: "DELETE",
       });
 

@@ -3,8 +3,9 @@ import db from "@/lib/db";
 export async function GET() {
   try {
     const [rows] = await db.query(`
-      SELECT id, name, contact_details, location, created_at 
-      FROM clients
+    SELECT id, name, contact_details, location, created_at
+FROM clients
+ORDER BY created_at DESC;
     `);
  
     return Response.json(rows);

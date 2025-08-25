@@ -9,7 +9,7 @@ export default function SuperAdminNavbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = async () => {
-    await fetch("/api/auth/logout", {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/logout`, {
       method: "POST",
     });
     // Clear localStorage token if you use it
@@ -59,7 +59,7 @@ export default function SuperAdminNavbar() {
             className="block hover:text-blue-400 transition"
             onClick={() => setIsOpen(false)}
           >
-            dashboard
+            Dashboard
           </Link>
           <Link
             href="/superadmin/managers"

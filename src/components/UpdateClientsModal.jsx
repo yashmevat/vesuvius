@@ -10,7 +10,7 @@ export default function UpdateClientsModal({ managerId, currentClients, managerL
 
     useEffect(() => {
         // Load all clients
-        fetch("/api/superadmin/clients/list")
+        fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/clients/list`)
             .then((res) => res.json())
             .then((data) => setClients(data));
 
@@ -57,7 +57,7 @@ export default function UpdateClientsModal({ managerId, currentClients, managerL
         }
 
         try {
-            const res = await fetch("/api/superadmin/managers/update-clients", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/managers/update-clients`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ managerId, clients: selectedClients }),

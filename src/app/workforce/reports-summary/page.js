@@ -8,7 +8,7 @@ export default function ReportsPage() {
   const [selectedReport, setSelectedReport] = useState(null);
 
   const fetchReports = async () => {
-    const res = await fetch(`/api/workforce/reports?status=${status}&workforceId=123`); // Replace with session ID
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/workforce/reports?status=${status}&workforceId=123`); // Replace with session ID
     const data = await res.json();
     setReports(data);
   };

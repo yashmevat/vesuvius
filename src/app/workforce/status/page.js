@@ -14,7 +14,7 @@ export default function ReportsPage() {
   useEffect(() => {
     const fetchUserId = async () => {
       try {
-        const idRes = await fetch("/api/auth/getuserid");
+        const idRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/getuserid`);
         const idData = await idRes.json();
         setUserId(idData.id);
       } catch (err) {
@@ -29,7 +29,7 @@ export default function ReportsPage() {
     if (!userId) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/workforce/reports?status=${status}&workforceId=${userId}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/workforce/reports?status=${status}&workforceId=${userId}`);
       const data = await res.json();
       setReports(data);
     } catch (error) {

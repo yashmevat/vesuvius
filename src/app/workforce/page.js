@@ -10,7 +10,7 @@ export default function WorkforceDashboard() {
   const [selectedManager, setSelectedManager] = useState(null);
 
   useEffect(() => {
-    fetch("/api/workforce/daily-reports").then(res => res.json()).then(setReports);
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/workforce/daily-reports`).then(res => res.json()).then(setReports);
   }, []);
 
   const submitReport = async () => {
@@ -19,7 +19,7 @@ export default function WorkforceDashboard() {
     formData.append("before_image", beforeImg);
     formData.append("after_image", afterImg);
 
-    await fetch("/api/workforce/daily-reports", {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/workforce/daily-reports`, {
       method: "POST",
       body: formData
     });

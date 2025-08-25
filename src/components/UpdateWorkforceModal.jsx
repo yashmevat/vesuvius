@@ -8,7 +8,7 @@ export default function UpdateWorkforceModal({ isOpen, onClose, managerId, curre
 
   const handleSubmit = async () => {
     try {
-      const res = await fetch("/api/superadmin/managers/update-workforce", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/managers/update-workforce`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ managerId, workforceLimit: Number(workforceLimit) }),

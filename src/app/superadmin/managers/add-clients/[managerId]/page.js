@@ -13,14 +13,14 @@ export default function UpdateManagerClients({ params }) {
 
   // Fetch all clients
   const fetchClients = async () => {
-    const res = await fetch("/api/superadmin/clients/list");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/clients/list`);
     const data = await res.json();
     setClients(data);
   };
 
   // Fetch manager's current clients
   const fetchManagerClients = async () => {
-    const res = await fetch(`/api/superadmin/managers/${managerId}/clients`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/managers/${managerId}/clients`);
     const data = await res.json();
     if (res.ok) setSelectedClients(data.map((c) => c.client_id)); // array of client IDs
   };
@@ -39,7 +39,7 @@ export default function UpdateManagerClients({ params }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/superadmin/managers/update-clients", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/managers/update-clients`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ managerId: Number(managerId), clientIds: selectedClients }),

@@ -11,13 +11,13 @@ export default function ManagerDashboard() {
   const [clientName, setClientName] = useState("");
 
   useEffect(() => {
-    fetch("/api/manager/workforce").then(res => res.json()).then(setWorkforces);
-    fetch("/api/manager/daily-reports").then(res => res.json()).then(setReports);
-    fetch("/api/superadmin/clients").then(res => res.json()).then(setClients);
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/manager/workforce`).then(res => res.json()).then(setWorkforces);
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/manager/daily-reports`).then(res => res.json()).then(setReports);
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/clients`).then(res => res.json()).then(setClients);
   }, []);
 
   const addWorkforce = async () => {
-    await fetch("/api/manager/workforce", {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/manager/workforce`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: wfName, email: wfEmail, password: wfPassword })
@@ -26,7 +26,7 @@ export default function ManagerDashboard() {
   };
 
   const addClient = async () => {
-    await fetch("/api/superadmin/clients", {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/clients`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: clientName })
@@ -35,7 +35,7 @@ export default function ManagerDashboard() {
   };
 
   const updateReportStatus = async (id, status) => {
-    await fetch("/api/manager/daily-reports", {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/manager/daily-reports`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, status })

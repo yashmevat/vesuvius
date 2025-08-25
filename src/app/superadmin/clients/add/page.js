@@ -16,7 +16,7 @@ export default function AddClient() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/superadmin/clients/add", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/clients/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -1,5 +1,5 @@
 // /app/api/manager/mark-notifications-read/route.js
-import { db } from "@/lib/db"; // your DB connection
+import db from "@/lib/db"; // your DB connection
 
 export async function POST(req) {
   try {

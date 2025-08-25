@@ -3,12 +3,15 @@ import nodemailer from "nodemailer";
 import db from "@/lib/db"
 import { v4 as uuidv4 } from 'uuid';
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL_USER, // your Gmail address
-        pass: process.env.EMAIL_PASS, // app password generated from Google Account
-    },
-});
+            host: 'mail.diamondraja.com',
+            port: 465,
+            secure: true, // true for 465
+            auth: {
+                user: process.env.EMAIL_USER, // your email
+                pass: process.env.EMAIL_PASS,         // your cPanel password
+            },
+        });
+
 
 
 export const POST = async (req) => {
@@ -29,7 +32,7 @@ export const POST = async (req) => {
     const userId=rows[0].id
 
     await db.query("insert into password_resets (user_id, token, expires_at) VALUES (?, ?, ?)",[userId,resetToken,tokenExpiry])
- const resetLink = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/resetpassword?token=${resetToken}`;
+ const resetLink = `${process.env.NEXT_PUBLIC_PRODUCTION_URL}${process.env.NEXT_PUBLIC_BASE_PATH}/auth/resetpassword?token=${resetToken}`;
 
 
        await transporter.sendMail({

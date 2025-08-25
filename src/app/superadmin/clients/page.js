@@ -1,12 +1,13 @@
 "use client";
 import SuperAdminNavbar from "@/components/SuperadminNavbar";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function ClientsList() {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
-    fetch("/api/superadmin/clients/list")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/clients/list`)
       .then(res => res.json())
       .then(data => setClients(data));
   }, []);
@@ -19,12 +20,12 @@ export default function ClientsList() {
           <h1 className="text-3xl font-bold mb-6 text-center text-white">Clients</h1>
 
           <div className="flex justify-end mb-4">
-            <a
+            <Link
               href="/superadmin/clients/add"
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition"
             >
               + Add Client
-            </a>
+            </Link>
           </div>
 
           <div className="overflow-x-auto">

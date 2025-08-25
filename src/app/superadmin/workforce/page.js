@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import SuperAdminNavbar from "@/components/SuperadminNavbar";
+import toast from "react-hot-toast";
 
 export default function WorkforceList() {
   const [workers, setWorkers] = useState([]);
@@ -13,19 +14,19 @@ export default function WorkforceList() {
   const [showModal, setShowModal] = useState(false);
 
   const fetchWorkforce = async () => {
-    const res = await fetch("/api/superadmin/workforce/list");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/workforce/list`);
     const data = await res.json();
     setWorkers(data);
   };
 
   const fetchManagers = async () => {
-    const res = await fetch("/api/superadmin/managers/list");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/managers/list`);
     const data = await res.json();
     setManagers(data);
   };
 
   const fetchClients = async () => {
-    const res = await fetch("/api/manager/getclients",{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/manager/getclients`,{
       method:"POST",
       body:JSON.stringify({id:selectedManager})
     });
@@ -54,7 +55,7 @@ export default function WorkforceList() {
   };
 
   const handleSave = async () => {
-    const res = await fetch(`/api/superadmin/workforce/update/${selectedWorker.id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/workforce/update/${selectedWorker.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -66,11 +67,11 @@ export default function WorkforceList() {
     });
 
     if (res.ok) {
-      alert("Updated successfully!");
+      toast.success("Updated successfully!");
       setShowModal(false);
       fetchWorkforce();
     } else {
-      alert("Update failed!");
+      toast.error("Update failed!");
     }
   };
 
@@ -83,7 +84,7 @@ export default function WorkforceList() {
 
           <div className="flex justify-end mb-4">
             <Link
-              href="/superadmin/workforce/add"
+              href={`/superadmin/workforce/add`}
               className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow transition"
             >
               + Add Workforce

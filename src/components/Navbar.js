@@ -11,13 +11,13 @@ const Navbar = () => {
         { name: "Dashboard", href: "/workforce/dashboard" },
         { name: "Reports", href: "/workforce/reports" },
         { name: "Status", href: "/workforce/status" },
-        { name: "Reports Summary", href: "/workforce/reports-summary" },
+        // { name: "Reports Summary", href: "/workforce/reports-summary" },
     ];
 
     const router = useRouter();
 
     const handleLogout = async () => {
-        await fetch("/api/auth/logout", {
+        await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/logout`, {
             method: "POST",
         });
         // Clear localStorage token if you use it

@@ -85,7 +85,7 @@ const handleCropCancel = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/elaborate", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/elaborate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ shortText: shortText }),
@@ -107,7 +107,7 @@ const handleCropCancel = () => {
   };
 
   const handleSubmit = async () => {
-    const res = await fetch(`/api/workforce/reports/${report.id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/workforce/reports/${report.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

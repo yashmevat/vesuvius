@@ -13,7 +13,7 @@ export default function AddManager() {
   });
 
   useEffect(() => {
-    fetch("/api/superadmin/clients/list")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/clients/list`)
       .then((res) => res.json())
       .then((data) => setClients(data));
   }, []);
@@ -27,7 +27,7 @@ export default function AddManager() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("/api/superadmin/managers/add", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/managers/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

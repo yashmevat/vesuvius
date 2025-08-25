@@ -30,7 +30,7 @@ export const POST = async (req) => {
       if (clientId) {
         try {
           // Use the full URL to avoid the ERR_INVALID_URL error
-          const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/fetchclient/${clientId}`);
+          const res = await fetch(`${process.env.NEXT_PUBLIC_PRODUCTION_URL}${process.env.NEXT_PUBLIC_BASE_PATH}/api/client/fetchclient/${clientId}`);
           const data = await res.json();
           if (data && data.client) {
             clients.push(data.client);

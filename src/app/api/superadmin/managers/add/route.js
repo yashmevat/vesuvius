@@ -2,13 +2,16 @@ import db from "@/lib/db";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER, // your Gmail address
-    pass: process.env.EMAIL_PASS, // app password generated from Google Account
-  },
-});
+   const transporter = nodemailer.createTransport({
+            host: 'mail.diamondraja.com',
+            port: 465,
+            secure: true, // true for 465
+            auth: {
+                user: process.env.EMAIL_USER, // your email
+                pass: process.env.EMAIL_PASS,         // your cPanel password
+            },
+        });
+
 
 function generateRandomPassword(length = 8) {
   return Math.random().toString(36).slice(-length);

@@ -14,13 +14,13 @@ export default function UploadWeeklyReport() {
   const [clients, setClients] = useState([]);
 
   const getManagerId = async () => {
-    const res = await fetch("/api/auth/getuserid");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/getuserid`);
     const data = await res.json();
     setManagerId(data.id);
   };
 
   const getClients = async () => {
-      const resClients = await fetch("/api/manager/getclients",{
+      const resClients = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/manager/getclients`,{
         method:"POST",
         body:JSON.stringify({id:managerId})
       });
@@ -74,7 +74,7 @@ export default function UploadWeeklyReport() {
         setFileType(file.type);
 
         // ✅ Step 2: Send URL to API for DB insert
-        const res = await fetch("/api/manager/send-weekly-report", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/manager/send-weekly-report`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

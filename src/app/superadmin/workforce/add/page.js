@@ -15,7 +15,7 @@ export default function AddWorkforce() {
  
   // Fetch managers list initially
   useEffect(() => {
-    fetch("/api/superadmin/managers/list")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/managers/list`)
       .then((res) => res.json())
       .then((data) => setManagers(data))
       .catch((err) => console.error("Error fetching managers:", err));
@@ -29,7 +29,7 @@ export default function AddWorkforce() {
         return;
       }
       try {
-        const res = await fetch("/api/manager/getclients", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/manager/getclients`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: form.managerId }),
@@ -55,7 +55,7 @@ export default function AddWorkforce() {
   const handleSubmit = async (e) => {
     e.preventDefault();
  
-    const res = await fetch("/api/superadmin/workforce/add", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/superadmin/workforce/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),

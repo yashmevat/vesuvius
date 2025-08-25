@@ -50,7 +50,7 @@ export async function GET() {
       LEFT JOIN manager_clients mc ON mc.manager_id = u.id
       LEFT JOIN clients c ON mc.client_id = c.id
       WHERE u.role = 'manager'
-      ORDER BY u.updated_at DESC
+      ORDER BY u.created_at DESC
     `);
 
     const managersMap = {};

@@ -4,7 +4,7 @@ export async function POST(req) {
   try {
     const { name, createdBy, contactDetails, location } = await req.json();
  
-    if (!name || !createdBy) {
+    if (!name || !createdBy ||!contactDetails || !location) {
       return Response.json(
         { error: "Missing required fields (name, createdBy)" },
         { status: 400 }
