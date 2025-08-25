@@ -36,6 +36,9 @@ export default function ClientsList() {
                   <th className="p-3 border border-gray-700">Contact Details</th>
                   <th className="p-3 border border-gray-700">Location</th>
                   <th className="p-3 border border-gray-700">Created At</th>
+                  <th className="p-3 border border-gray-700">Robotics Scan</th>
+                  <th className="p-3 border border-gray-700">Report Timing</th>
+                  <th className="p-3 border border-gray-700">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,6 +50,15 @@ export default function ClientsList() {
                       <td className="p-3 border border-gray-700 text-gray-200">{c.location || "-"}</td>
                       <td className="p-3 border border-gray-700 text-gray-400">
                         {new Date(c.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="p-3 border border-gray-700 text-gray-400">
+                        {c.roboticsscan || "-"}
+                      </td>
+                      <td className="p-3 border border-gray-700 text-gray-400">
+                        {c.reporttiming || "-"}
+                      </td>
+                      <td className="p-3 border border-gray-700 text-gray-400">
+                        <Link href='#' className="text-blue-500 hover:text-blue-600">Edit</Link>
                       </td>
                     </tr>
                   ))

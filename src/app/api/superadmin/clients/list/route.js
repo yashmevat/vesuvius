@@ -3,7 +3,7 @@ import db from "@/lib/db";
 export async function GET() {
   try {
     const [rows] = await db.query(`
-    SELECT id, name, contact_details, location, created_at
+    SELECT id, name, contact_details, location, created_at, roboticsscan, reporttiming
 FROM clients
 ORDER BY created_at DESC;
     `);
