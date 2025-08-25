@@ -7,6 +7,7 @@ import { X } from "lucide-react";
 function ReportCard({ report, handleUpdateStatus }) {
   const [expanded, setExpanded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);  
+  const [selectedImage, setSelectedImage] = useState(null);
   const [showEdit, setShowEdit] = useState(false);
   const [editData, setEditData] = useState({ ...report });
   const maxLength = 100;
@@ -84,39 +85,86 @@ const handleChange = (e) => {
                 <b>Remarks:</b> {report.remarks}
               </p>
             )}
+            {report.submitted_at && (
+              <p className="text-white mt-2">
+                <b>Submitted at:</b> {new Date(report.submitted_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
+            )}
         </div>
 
-        {/* 🔹 Open Modal Button */}
-        <button
-          onClick={() => setIsOpen(true)}
-          className="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded shadow transition-colors duration-200 mt-2"
-        >
-          Click to view image
-        </button>
+        {/* 🔹 Image Thumbnails */}
+        <div className="mt-3 space-y-3">
+          {report.image_url && (
+            <div>
+              {report.image_text && (
+                <p className="text-sm font-semibold text-gray-300 mb-1">{report.image_text}</p>
+              )}
+              <img
+                src={report.image_url}
+                alt={report.image_text || "Before image"}
+                onClick={() => {
+                  setSelectedImage({ url: report.image_url, text: report.image_text || "Before image" });
+                  setIsOpen(true);
+                }}
+                className="w-full h-32 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                title="Click to view full size"
+              />
+            </div>
+          )}
+          
+          {report.image_url2 && (
+            <div>
+              {report.image_text2 && (
+                <p className="text-sm font-semibold text-gray-300 mb-1">{report.image_text2}</p>
+              )}
+              <img
+                src={report.image_url2}
+                alt={report.image_text2 || "After image"}
+                onClick={() => {
+                  setSelectedImage({ url: report.image_url2, text: report.image_text2 || "After image" });
+                  setIsOpen(true);
+                }}
+                className="w-full h-32 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                title="Click to view full size"
+              />
+            </div>
+          )}
+        </div>
 
-        {/* 🔹 Modal */}
-        {isOpen && (
+        {/* 🔹 Full Size Modal */}
+        {isOpen && selectedImage && (
           <div
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false);
+              setSelectedImage(null);
+            }}
             className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50"
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="shadow-lg p-4 max-w-lg relative"
+              className="shadow-lg p-4 max-w-4xl max-h-[90vh] relative bg-gray-900 rounded-lg"
             >
               {/* Close button */}
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  setSelectedImage(null);
+                }}
                 className="absolute -top-10 -right-7 bg-black/70 rounded-full p-2 hover:bg-red-600 transition"
               >
                 <X className="w-6 h-6 text-white" />
               </button>
 
-              {/* Image Preview */}
+              {/* Image Title */}
+              {selectedImage.text && (
+                <h3 className="text-white text-lg font-semibold mb-2">{selectedImage.text}</h3>
+              )}
+
+              {/* Full Size Image */}
               <img
-                src={report.image_url}
-                alt="Report Preview"
-                className="max-h-[80vh] object-contain"
+                src={selectedImage.url}
+                alt={selectedImage.text}
+                className="max-h-[80vh] max-w-full object-contain rounded"
               />
             </div>
           </div>

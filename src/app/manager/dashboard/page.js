@@ -28,6 +28,7 @@ const initStats = [
   { title: "Approved", value: 0 },
   { title: "Rejected", value: 0 },
   { title: "Workforce", value: 0 },
+  { title: "Total Workforce", value: 0 },
 ];
 
 const COLORS = ["#facc15", "#22c55e", "#ef4444", "#3b82f6"];
@@ -37,6 +38,7 @@ const ManagerDashboard = () => {
   const [workforce, setWorkforce] = useState([]);
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState(initStats);
+  const [totalWorkforce, setTotalWorkforce] = useState(0);
 
   const columns = [
     {
@@ -131,6 +133,7 @@ const ManagerDashboard = () => {
       );
       const json = await res.json();
       setWorkforce(json.workforceData);
+      setTotalWorkforce(json.total);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -178,9 +181,9 @@ const ManagerDashboard = () => {
   <main className="flex-1 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
     <div className="w-full max-w-7xl flex flex-col gap-8">
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         {stats.map((s, index) => {
-          const value = s.title === "Workforce" ? workforce?.length : s.value;
+          const value = s.title === "Workforce" ? workforce?.length : s.title === "Total Workforce" ? totalWorkforce : s.value;
           return (
             <StatCard title={s.title} value={value} key={`stat-card-${index}`} />
           );

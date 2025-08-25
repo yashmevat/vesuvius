@@ -12,7 +12,8 @@ export async function GET(req) {
 
         let query = `
                     SELECT 
-                        r.id, r.short_text, r.elaborated_text, r.image_url, r.status, r.submitted_at,
+                        r.id, r.short_text, r.elaborated_text, r.image_url, r.image_text, 
+                        r.image_url2, r.image_text2, r.status, r.submitted_at, r.remarks,
                         u.name AS workforce_name,
                         c.name AS client_name
                         FROM reports r

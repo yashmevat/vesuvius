@@ -10,7 +10,10 @@ export async function POST(req) {
       client_id,
       short_text,
       elaborated_text,
-      image_url
+      image_url,
+      image_text,
+      image_url2,
+      image_text2
     } = body;
 
     if (!workforce_id || !manager_id || !client_id || !short_text || !image_url) {
@@ -22,8 +25,8 @@ export async function POST(req) {
 
     const [insert] = await db.query(
       `INSERT INTO reports 
-        (workforce_id,manager_id, client_id, short_text, elaborated_text, image_url, status, submitted_at) 
-        VALUES (?,?, ?, ?, ?, ?, ?, NOW())`,
+        (workforce_id, manager_id, client_id, short_text, elaborated_text, image_url, image_text, image_url2, image_text2, status, submitted_at) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
       [
         workforce_id,
         manager_id,
@@ -31,6 +34,9 @@ export async function POST(req) {
         short_text,
         elaborated_text || null,
         image_url,
+        image_text || null,
+        image_url2 || null,
+        image_text2 || null,
         "Pending",
       ]
     );

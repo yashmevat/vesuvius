@@ -7,7 +7,7 @@ export async function GET(req) {
     const workforceId = searchParams.get("workforceId"); // from session or query
 
     let query = `
-      SELECT id, short_text, elaborated_text, image_url, status, remarks,submitted_at
+      SELECT id, short_text, elaborated_text, image_url, image_url2, image_text, image_text2, status, remarks,submitted_at
       FROM reports
       WHERE workforce_id = ?
     `;

@@ -42,6 +42,16 @@ export default function UserLogin() {
     </h1>
 
     <form onSubmit={handleLogin} className="space-y-5">
+
+            {/* Role Dropdown */}
+            <select
+        className="border border-gray-700 bg-gray-800/90 text-white p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
+        onChange={(e) => setForm({ ...form, role: e.target.value })}
+      >
+        <option value="">Select Role</option>
+        <option value="manager">Manager</option>
+        <option value="workforce">Workforce</option>
+      </select>
       
       {/* Email Input */}
       <input
@@ -52,6 +62,7 @@ export default function UserLogin() {
       />
 
       {/* Password Input */}
+      
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
@@ -72,15 +83,7 @@ export default function UserLogin() {
             </button>
           </div>
 
-      {/* Role Dropdown */}
-      <select
-        className="border border-gray-700 bg-gray-800/90 text-white p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
-        onChange={(e) => setForm({ ...form, role: e.target.value })}
-      >
-        <option value="">Select Role</option>
-        <option value="manager">Manager</option>
-        <option value="workforce">Workforce</option>
-      </select>
+
 
       {/* Login Buttons */}
       <div className="flex gap-4">

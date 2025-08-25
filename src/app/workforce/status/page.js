@@ -1,14 +1,24 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import EditReportModal from "@/components/EditReportModal";
 import Navbar from "@/components/Navbar";
 
-export default function ReportsPage() {
+function ReportsContent() {
+  const searchParams = useSearchParams();
   const [status, setStatus] = useState("approved"); // Default tab
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
   const [userId, setUserId] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Check for pending parameter in URL
+  useEffect(() => {
+    const pendingParam = searchParams.get('pending');
+    if (pendingParam === 'true') {
+      setStatus('pending');
+    }
+  }, [searchParams]);
 
   // ✅ Fetch user ID first
   useEffect(() => {
@@ -99,7 +109,19 @@ export default function ReportsPage() {
             className="w-32 md:w-40 rounded-lg border border-gray-700 mb-4"
           />
         )}
-
+        {report.image_text && (
+          <p className="text-gray-300 mb-4 text-sm md:text-base">{report.image_text}</p>
+        )}
+        {report.image_url2 && (
+          <img
+            src={report.image_url2}
+            alt="Report"
+            className="w-32 md:w-40 rounded-lg border border-gray-700 mb-4"
+          />
+        )}
+        {report.image_text2 && (
+          <p className="text-gray-300 mb-4 text-sm md:text-base">{report.image_text2}</p>
+        )}
         {/* Remarks */}
         {(report.status === "edit_requested" || report.status === "rejected") && (
           <p className="text-sm mb-2">
@@ -147,5 +169,20 @@ export default function ReportsPage() {
 </div>
 
 
+  );
+}
+
+export default function ReportsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-400 mx-auto mb-4"></div>
+          <p className="text-gray-300">Loading...</p>
+        </div>
+      </div>
+    }>
+      <ReportsContent />
+    </Suspense>
   );
 }

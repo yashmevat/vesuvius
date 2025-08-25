@@ -9,7 +9,7 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const tabs = [
         { name: "Dashboard", href: "/workforce/dashboard" },
-        { name: "Reports", href: "/workforce/reports" },
+        { name: "Add Reports", href: "/workforce/reports" },
         { name: "Status", href: "/workforce/status" },
         // { name: "Reports Summary", href: "/workforce/reports-summary" },
     ];

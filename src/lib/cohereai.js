@@ -4,10 +4,10 @@ const cohere = new CohereClient({
   token: process.env.COHERE_API_KEY,
 });
 
-export const getElaboratedText3 = async (shortText) => {
+export const getElaboratedText3 = async (shortText, clientName) => {
   const response = await cohere.generate({
     model: "command",
-    prompt: `Elaborate this work report: ${shortText}`,
+    prompt: `Elaborate this work report and fix grammer corrections and rephasing the text: ${shortText} for ${clientName}`,
     max_tokens: 300,
     temperature: 0.7,
   });

@@ -49,6 +49,7 @@ export async function POST(req) {
               Password: ${plainPassword}
 
               Please login and change your password ASAP.
+              on https://diamondraja.com/vis/login/
 
               Thanks,
            Admin Team`,

@@ -140,11 +140,17 @@ export default function ManagerNavbar() {
               ReportsStatus
             </Link>
             <Link
+              href="/manager/workforce/add"
+              className="hover:text-blue-400 transition"
+            >
+              Add Workforce
+            </Link>
+            {/* <Link
               href="/manager/weeklyreport"
               className="hover:text-blue-400 transition"
             >
               WeeklyReport
-            </Link>
+            </Link> */}
             <button
               onClick={handleLogout}
               className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded transition"
@@ -182,6 +188,12 @@ export default function ManagerNavbar() {
             className="block hover:text-blue-400 transition"
           >
             ReportsStatus
+          </Link>
+          <Link
+            href="/manager/workforce/add"
+            className="block hover:text-blue-400 transition"
+          >
+            Add Workforce
           </Link>
           <Link
             href="/manager/weeklyreport"

@@ -41,6 +41,7 @@ const initStats = [
   { title: "Pending", value: 0 },
   { title: "Approved", value: 0 },
   { title: "Rejected", value: 0 },
+  { title: "Weekly Reports", value: 0 },
 ];
 
 const WorkForceDashboard = () => {

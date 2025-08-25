@@ -23,8 +23,10 @@ export const POST = async (req) => {
         { status: 400 }
       );
     }
+
+    const [totalWorkforce] = await db.query("SELECT workforce_limit FROM users WHERE id=?",[id]);
     const len = rows.length;
-    return NextResponse.json({success:true , workforceData:rows ,worforce:len},{status:200})
+    return NextResponse.json({success:true , workforceData:rows ,worforce:len, total:totalWorkforce[0].workforce_limit},{status:200})
    
   } catch (error) {
     console.error("Internal server error:", error);

@@ -62,6 +62,13 @@ export default function SuperAdminNavbar() {
             Dashboard
           </Link>
           <Link
+            href="/superadmin/clients"
+            className="block hover:text-blue-400 transition"
+            onClick={() => setIsOpen(false)}
+          >
+            Clients
+          </Link>
+          <Link
             href="/superadmin/managers"
             className="block hover:text-blue-400 transition"
             onClick={() => setIsOpen(false)}
@@ -74,13 +81,6 @@ export default function SuperAdminNavbar() {
             onClick={() => setIsOpen(false)}
           >
             Workforce
-          </Link>
-          <Link
-            href="/superadmin/clients"
-            className="block hover:text-blue-400 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Clients
           </Link>
           <Link
             href="/superadmin/reports"

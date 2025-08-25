@@ -12,8 +12,12 @@ export const POST = async (req) => {
       );
     }
 
+    // Join manager_clients with clients table to get client details directly
     const [rows] = await db.query(
-      "SELECT client_id FROM manager_clients WHERE manager_id=?",
+      `SELECT c.id, c.name, c.created_at 
+       FROM manager_clients mc
+       JOIN clients c ON mc.client_id = c.id
+       WHERE mc.manager_id = ?`,
       [id]
     );
 
@@ -24,41 +28,10 @@ export const POST = async (req) => {
       );
     }
 
-    let clients = [];
-
-    async function fetchClient(clientId) {
-      if (clientId) {
-        try {
-          // Use the full URL to avoid the ERR_INVALID_URL error
-          const res = await fetch(`${process.env.NEXT_PUBLIC_PRODUCTION_URL}${process.env.NEXT_PUBLIC_BASE_PATH}/api/client/fetchclient/${clientId}`);
-          const data = await res.json();
-          if (data && data.client) {
-            clients.push(data.client);
-          }
-        } catch (error) {
-          console.error(`Error fetching client with ID ${clientId}:`, error);
-        }
-      }
-    }
-
-    // Fetch all clients asynchronously
-    await Promise.all(
-      rows.map(async (r) => {
-        await fetchClient(r.client_id);
-      })
+    return NextResponse.json(
+      { success: true, message: "Clients fetched successfully", clients: rows },
+      { status: 200 }
     );
-
-    if (clients.length > 0) {
-      return NextResponse.json(
-        { success: true, message: "Clients fetched successfully", clients },
-        { status: 200 }
-      );
-    } else {
-      return NextResponse.json(
-        { success: false, message: "No clients assigned" },
-        { status: 400 }
-      );
-    }
   } catch (error) {
     console.error("Internal server error:", error);
     return NextResponse.json(

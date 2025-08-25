@@ -8,11 +8,28 @@ export async function GET(req) {
     }
  
     try {
+        // Get daily report stats
         const [rows] = await db.query(
             "SELECT status, COUNT(*) as count FROM reports WHERE workforce_id = ? GROUP BY status",[workforceId]
         );
  
-        const  result = rows.map(r=>({title:r.status, value: r.count}))
+        const result = rows.map(r=>({title:r.status, value: r.count}))
+        
+        // Get weekly report count
+        let weeklyReportCount = 0;
+        try {
+            const [weeklyRows] = await db.query(
+                "SELECT COUNT(*) as count FROM workforce_weekly_reports WHERE workforce_id = ?",
+                [workforceId]
+            );
+            weeklyReportCount = weeklyRows[0].count || 0;
+        } catch (error) {
+            // Table might not exist yet
+            console.log("Weekly reports table not found");
+        }
+        
+        // Add weekly report stat
+        result.push({ title: "Weekly Reports", value: weeklyReportCount });
  
         return new Response(JSON.stringify({stats: result}), {
             status: 200,
