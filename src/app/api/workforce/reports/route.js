@@ -7,9 +7,10 @@ export async function GET(req) {
     const workforceId = searchParams.get("workforceId"); // from session or query
 
     let query = `
-      SELECT id, short_text, elaborated_text, image_url, image_url2, image_text, image_text2, status, remarks,submitted_at
-      FROM reports
-      WHERE workforce_id = ?
+      SELECT r.id, r.short_text, r.elaborated_text, r.image_url, r.image_url2, r.image_text, r.image_text2, r.status, r.remarks, r.submitted_at, w.pdf_url
+      FROM reports r
+      LEFT JOIN workforce_weekly_reports w ON r.id = w.report_id
+      WHERE r.workforce_id = ?
     `;
 
     const params = [workforceId];

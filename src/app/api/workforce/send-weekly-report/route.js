@@ -23,7 +23,7 @@ export async function POST(req) {
       return NextResponse.json({ error: "Unauthorized - workforce only" }, { status: 403 });
     }
 
-    const { pdfUrl } = await req.json();
+    const { pdfUrl, report_id } = await req.json();
 
     if (!pdfUrl) {
       return NextResponse.json({ success: false, message: "Missing PDF URL" }, { status: 400 });
@@ -37,9 +37,9 @@ export async function POST(req) {
 
       // Insert workforce weekly report
       await connection.execute(
-        `INSERT INTO workforce_weekly_reports (workforce_id, client_id, pdf_url, submitted_at)
-         VALUES (?, ?, ?, NOW())`,
-        [workforceId, clientId, pdfUrl]
+        `INSERT INTO workforce_weekly_reports (workforce_id, client_id, pdf_url, submitted_at, report_id)
+         VALUES (?, ?, ?, NOW(), ?)`,
+        [workforceId, clientId, pdfUrl, report_id]
       );
 
       // Clear any weekly report notifications for this workforce member

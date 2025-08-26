@@ -15,10 +15,12 @@ export async function GET(req) {
                         r.id, r.short_text, r.elaborated_text, r.image_url, r.image_text, 
                         r.image_url2, r.image_text2, r.status, r.submitted_at, r.remarks,
                         u.name AS workforce_name,
-                        c.name AS client_name
+                        c.name AS client_name,
+                        w.pdf_url
                         FROM reports r
                         JOIN users u ON r.workforce_id = u.id
                         JOIN clients c ON r.client_id = c.id
+                        LEFT JOIN workforce_weekly_reports w ON r.id = w.report_id
                         WHERE r.manager_id = ?
 
                     `;

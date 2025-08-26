@@ -184,8 +184,9 @@ const ManagerDashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         {stats.map((s, index) => {
           const value = s.title === "Workforce" ? workforce?.length : s.title === "Total Workforce" ? totalWorkforce : s.value;
+          const title = s.title === "Workforce" ? "Active Workforce" : s.title;
           return (
-            <StatCard title={s.title} value={value} key={`stat-card-${index}`} />
+            <StatCard title={title} value={value} key={`stat-card-${index}`} />
           );
         })}
       </div>

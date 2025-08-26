@@ -144,6 +144,14 @@ function ReportsContent() {
             {report.status.replace("_", " ")}
           </span>
         </p>
+        {report.pdf_url && (
+          <p className="text-sm mb-4">
+            <span className="font-semibold text-blue-500">Weekly Report:</span>{" "}
+            <a href={report.pdf_url} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
+              View Weekly Report
+            </a>
+          </p>
+        )}
 
         {/* Edit Button */}
         {report.status === "edit_requested" && (

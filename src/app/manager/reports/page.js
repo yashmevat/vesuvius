@@ -90,6 +90,14 @@ const handleChange = (e) => {
                 <b>Submitted at:</b> {new Date(report.submitted_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             )}
+            {report.pdf_url && (
+              <p className="text-sm mb-4">
+                <span className="font-semibold text-blue-500">Weekly Report:</span>{" "}
+                <a href={report.pdf_url} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
+                  View Weekly Report
+                </a>
+              </p>
+            )}
         </div>
 
         {/* 🔹 Image Thumbnails */}
@@ -128,6 +136,14 @@ const handleChange = (e) => {
                 title="Click to view full size"
               />
             </div>
+          )}
+          {report.pdf_url && (
+            <p className="text-sm mb-4">
+              <span className="font-semibold text-blue-500">Weekly Report:</span>{" "}
+              <a href={report.pdf_url} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
+                View Weekly Report
+              </a>
+            </p>
           )}
         </div>
 

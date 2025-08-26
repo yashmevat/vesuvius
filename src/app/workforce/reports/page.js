@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Mic, MicOff } from "lucide-react";
 
 export default function WorkforceReportForm() {
     const router = useRouter();
@@ -39,6 +40,11 @@ export default function WorkforceReportForm() {
     const [previewUrl, setPreviewUrl] = useState(null);
     const [previewUrl2, setPreviewUrl2] = useState(null);
     const [currentImageType, setCurrentImageType] = useState(null); // 'before' or 'after'
+    
+    // Speech recognition states
+    const [isListening, setIsListening] = useState(false);
+    const [speechSupported, setSpeechSupported] = useState(false);
+    const [recognition, setRecognition] = useState(null);
 
     const handleImageChange = (e, imageType) => {
         const file = e.target.files?.[0];
@@ -138,6 +144,42 @@ export default function WorkforceReportForm() {
 
     }, [selectedManager])
 
+    // Check speech recognition support and initialize
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                setSpeechSupported(true);
+                const recognitionInstance = new SpeechRecognition();
+                recognitionInstance.continuous = false;
+                recognitionInstance.interimResults = false;
+                recognitionInstance.lang = 'en-US';
+                
+                recognitionInstance.onstart = () => {
+                    setIsListening(true);
+                };
+                
+                recognitionInstance.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    setShortText(prev => prev + (prev ? ' ' : '') + transcript);
+                };
+                
+                recognitionInstance.onend = () => {
+                    setIsListening(false);
+                };
+                
+                recognitionInstance.onerror = (event) => {
+                    setIsListening(false);
+                    toast.error(`Speech recognition error: ${event.error}`);
+                };
+                
+                setRecognition(recognitionInstance);
+            } else {
+                setSpeechSupported(false);
+            }
+        }
+    }, []);
+
 
 
 
@@ -189,6 +231,27 @@ export default function WorkforceReportForm() {
             console.error(err);
         }
         setElaborateLoading(false);
+    };
+
+    // Speech recognition functions
+    const startListening = () => {
+        if (recognition && speechSupported) {
+            try {
+                recognition.start();
+                toast.success('Listening... Speak now!');
+            } catch (error) {
+                toast.error('Failed to start speech recognition');
+            }
+        } else {
+            toast.error('Speech recognition not supported in this browser');
+        }
+    };
+
+    const stopListening = () => {
+        if (recognition) {
+            recognition.stop();
+            setIsListening(false);
+        }
     };
 
          // Submit report
@@ -277,6 +340,7 @@ export default function WorkforceReportForm() {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         pdfUrl: weeklyReportUrl,
+                        report_id: (await res.json()).report_id,
                     }),
                     credentials: "include",
                 });
@@ -378,14 +442,31 @@ export default function WorkforceReportForm() {
 
                     
                     
-                            {/* Short Text */}
+                            {/* Short Text with Microphone */}
                     <label className="block mb-2 font-medium">Short Text</label>
-                    <textarea
-                        value={shortText}
-                        onChange={(e) => setShortText(e.target.value)}
-                        className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500 mb-4"
-                        rows={3}
-                    />
+                    <div className="relative mb-4">
+                        <textarea
+                            value={shortText}
+                            onChange={(e) => setShortText(e.target.value)}
+                            className="w-full p-3 pr-12 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                            rows={3}
+                            placeholder="Type your short text here or use the microphone..."
+                        />
+                        {speechSupported && (
+                            <button
+                                type="button"
+                                onClick={isListening ? stopListening : startListening}
+                                className={`absolute right-2 top-2 p-2 rounded-lg transition-colors ${
+                                    isListening 
+                                        ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse' 
+                                        : 'bg-blue-500 hover:bg-blue-600 text-white'
+                                }`}
+                                title={isListening ? 'Stop listening' : 'Start voice input'}
+                            >
+                                {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+                            </button>
+                        )}
+                    </div>
 
                     {/* Generate Elaborated Text */}
                     <button

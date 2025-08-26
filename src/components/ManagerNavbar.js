@@ -134,12 +134,6 @@ export default function ManagerNavbar() {
               Reports
             </Link>
             <Link
-              href="/manager/reportsstatus"
-              className="hover:text-blue-400 transition"
-            >
-              ReportsStatus
-            </Link>
-            <Link
               href="/manager/workforce/add"
               className="hover:text-blue-400 transition"
             >
